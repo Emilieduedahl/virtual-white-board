@@ -1,0 +1,14 @@
+{
+  "users": [
+    {
+      "name": "Sam",
+      "password": "supersecretpsw",
+      "moderator": false
+    },
+    {
+      "name": "Bertha",
+      "password": "supersecretpsw2",
+      "moderator": false
+    }
+  ]
+}
