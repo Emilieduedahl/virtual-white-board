@@ -1,11 +1,7 @@
-import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:split_view/split_view.dart';
 import 'package:virtual_white_board/user.dart';
-import 'package:path_provider/path_provider.dart';
-import 'dart:async';
 
 class FrontPage extends StatefulWidget {
   FrontPage({Key key, this.user});
@@ -35,7 +31,7 @@ void initState() {
   moderator = widget.user.moderator;
 }
 
-
+//method for updating for a cooler alias
   updateName(newName) {
     setState(() {
       username = newName;
@@ -59,6 +55,7 @@ void initState() {
     );
   }
 
+  //method for updating password
   updatePassword(newPassword) {
     setState(() {
       psw = newPassword;
@@ -82,6 +79,7 @@ void initState() {
     );
   }
 
+  //method for deleting a user's own post. Ensures users cannot delete other user's posts - unless they are a moderator.
   deletePost(post) {
     var author = post.contains('$username');
 
@@ -97,27 +95,19 @@ void initState() {
       });
     } else {
       return showDialog(context: context,
-      child: new AlertDialog(
-      title: new Text('Info'),
-      content: Text('Du har ikke rettigheder til at slette andre posts end dine egne'),
-      actions: [
-        declined,
-      ],
-    )
+          child: new AlertDialog(
+          title: new Text('Info'),
+          content: Text('Du har ikke rettigheder til at slette andre posts end dine egne'),
+          actions: [
+            declined,
+          ],
+        )
       );
     }
 
   }
 
-  /*_save() async {
-    final directory = await getApplicationDocumentsDirectory();
-    final file = File('${directory.path}/savedPosts.txt');
-    final text = 'Hello World!';
-    await file.writeAsString(text);
-    print('saved');
-  }*/
-
-
+//Widget builds the split layout with input to the left that will appear on the virtual whiteboard to the right.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,7 +130,6 @@ void initState() {
               ),
         RaisedButton(child: Text("Post"), onPressed: () {
           String texttoadd;
-          _save();
           setState(() {
             texttoadd = inputValue.text;
             textPosts.add('$texttoadd skrevet af $username');
@@ -180,6 +169,7 @@ void initState() {
                 padding: EdgeInsets.all(8.0),
                 child: Text("Bliv moderator (jo jo, en administrator siger ok for det!)"),
               ),
+              SizedBox(height: 10),
               RaisedButton(child: Text("Jo tak, det vil jeg gerne"), onPressed: () {
                 setState(() {
                   moderator = true;

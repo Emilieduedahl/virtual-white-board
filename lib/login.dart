@@ -59,6 +59,7 @@ class _LoginFormState extends State<LoginForm> {
     return await rootBundle.loadString('lib/assets/cuteAD.json');
   }
 
+  //method checks the credentials by loading the list of current valid users. Then nagivates to the frontpage.
   Future checkUser(name, password) async {
     String response = await loadUsers();
     List<User> users = parseUsers(response);
@@ -77,6 +78,7 @@ class _LoginFormState extends State<LoginForm> {
     }
   }
 
+  //Form widget for entering login credentials. Calls to validate the credentials before navigating to the whiteboard.
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -105,11 +107,6 @@ class _LoginFormState extends State<LoginForm> {
           ),
           RaisedButton(child: Text("Login"), onPressed: () {
             checkUser(_usernameTextController.text, _passwordTextController.text);
-            /*if(checkUser(_usernameTextController.text, _passwordTextController.text) == Future<bool>.value(true)) {
-                Navigator.push((context), MaterialPageRoute(builder: (context) => FrontPage(user: user)));
-            } else {
-              print("Wrong login credentials");
-            }*/
           }
           ),
         ],

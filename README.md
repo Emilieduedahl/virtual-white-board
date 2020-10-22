@@ -1,16 +1,16 @@
 # virtual_white_board
 
-A new Flutter project.
+This is a simple whiteboard with functionality for currently two coworkers to upload motivational quotes for each other during a long workday. 
+It is possible to extend to memes and fun youtube videos in the future. 
+The access to the whiteboard is controlled through the local file 'cuteAD.json'. Here, you'll se that two users have access. When logging in, the username and password is checked to see if they really are valid users. More users can be added.
 
-## Getting Started
+It is possible for users to only delete their own posts. For example, if they regret "live, love, laugh" and no longer believe this is how life should be lived. 
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+Download the repository and run the code through web (Chrome). Flutter plugin for your IDE might be needed. This is supported by Android Studio, IntelliJ IDEA and VS Code.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Hack your way through a login (hint: pretend you are either Sam or Bertha whose passwords you can locate in the cuteAD.json file).
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Ask to become a moderator, upload a post and watch it appear on the whiteboard to the right, try to delete one of your posts again and watch it disappear again. Or change your name to something cooler. 
+
+Unfortunately, the whiteboard's database is down, so posts from one run to another will not be saved.
