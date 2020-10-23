@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:split_view/split_view.dart';
 import 'package:virtual_white_board/user.dart';
+import 'package:virtual_white_board/post.dart';
 
 class FrontPage extends StatefulWidget {
   FrontPage({Key key, this.user});
@@ -19,16 +20,22 @@ class _FrontPageState extends State<FrontPage> {
   bool input = false;
   String username;
   String psw;
+  String uid;
   bool moderator;
-  List<String> textPosts = [];
+  List<Post> motivationalPosts = [];
+  Post firstPost;
   String _selectedToDelete;
 
 @override
 void initState() {
   super.initState();
+  firstPost = new Post(content: "Velkommen!", author: "admin", authorID: "3923");
+  _selectedToDelete = firstPost.content;
+  motivationalPosts.add(firstPost);
   username = widget.user.username;
   psw = widget.user.password;
   moderator = widget.user.moderator;
+  uid = widget.user.uid;
 }
 
 //method for updating for a cooler alias
@@ -81,7 +88,6 @@ void initState() {
 
   //method for deleting a user's own post. Ensures users cannot delete other user's posts - unless they are a moderator.
   deletePost(post) {
-    var author = post.contains('$username');
 
     Widget declined = FlatButton(child: Text("Hov"),
         onPressed: () {
@@ -89,22 +95,33 @@ void initState() {
         }
     );
 
-    if(author) {
-      setState(() {
-        textPosts.remove(_selectedToDelete);
-      });
-    } else {
-      return showDialog(context: context,
-          child: new AlertDialog(
-          title: new Text('Info'),
-          content: Text('Du har ikke rettigheder til at slette andre posts end dine egne'),
-          actions: [
-            declined,
-          ],
-        )
-      );
-    }
 
+    for(Post p in motivationalPosts) {
+      if (p.content == (post)) {
+        if(p.authorID == uid) {
+          setState(() {
+            motivationalPosts.remove(p);
+          });
+        } else {
+          return showDialog(context: context,
+              child: new AlertDialog(
+                title: new Text('Info'),
+                content: Text('Du har ikke rettigheder til at slette andre posts end dine egne'),
+                actions: [
+                  declined,
+                ],
+              )
+          );
+        }
+      }
+    }
+  }
+
+  createPost(input) {
+    Post p = new Post(content: input, author: username, authorID: uid);
+    setState(() {
+      motivationalPosts.add(p);
+    });
   }
 
 //Widget builds the split layout with input to the left that will appear on the virtual whiteboard to the right.
@@ -129,10 +146,8 @@ void initState() {
               ),
               ),
         RaisedButton(child: Text("Post"), onPressed: () {
-          String texttoadd;
+          createPost(inputValue.text);
           setState(() {
-            texttoadd = inputValue.text;
-            textPosts.add('$texttoadd skrevet af $username');
             input = true;
             inputValue.clear();
           });
@@ -183,13 +198,13 @@ void initState() {
                 onChanged: (newValue) {
                   setState(() {
                     _selectedToDelete = newValue;
+                    deletePost(_selectedToDelete);
                   });
-                  deletePost(_selectedToDelete);
                 },
-                items: textPosts.map((post) {
+                items: motivationalPosts.map((post) {
                   return DropdownMenuItem(
-                    child: new Text(post),
-                    value: post,
+                    child: new Text(post.content + " skrevet af: " + post.author),
+                    value: post.content,
                   );
                 }).toList(),
                 )
@@ -220,22 +235,19 @@ void initState() {
   }
 
   getPost() {
-    if(input == true) { //check if image is also not null
+    if(input == true) {
       return
           ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
             padding: EdgeInsets.all(30),
-            itemCount: textPosts.length,
+            itemCount: motivationalPosts.length,
             itemBuilder: (BuildContext context, int index) {
               return Column(
                 children: [
-                  Text(textPosts[index]),
-                  /*Image.network(
-                  'https://picsum.photos/250?image=9')*/ //implement image posted by the user
+                  Text(motivationalPosts[index].content + " skrevet af: " + motivationalPosts[index].author),
                 ],
-
-              );//new Text(textPosts[index]);
+              );
             }
           );
     } else {

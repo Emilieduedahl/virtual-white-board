@@ -11,6 +11,6 @@ Download the repository and run the code through web (Chrome). Flutter plugin fo
 
 Hack your way through a login (hint: pretend you are either Sam or Bertha whose passwords you can locate in the cuteAD.json file).
 
-Ask to become a moderator, upload a post and watch it appear on the whiteboard to the right, try to delete one of your posts again and watch it disappear again. Or change your name to something cooler. 
+Ask to become a moderator, upload a post and watch it appear on the whiteboard to the right, try to delete one of your posts again and watch it disappear again (unfortunately, there are some issues in rendering the dropdown after deleting..but the post is gone). Or change your name to something cooler. 
 
 Unfortunately, the whiteboard's database is down, so posts from one run to another will not be saved.

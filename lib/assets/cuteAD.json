@@ -1,11 +1,13 @@
 {
   "users": [
     {
+      "uid": "2h383je",
       "name": "Sam",
       "password": "supersecretpsw",
       "moderator": false
     },
     {
+      "uid": "ehf324ouel",
       "name": "Bertha",
       "password": "supersecretpsw2",
       "moderator": false
